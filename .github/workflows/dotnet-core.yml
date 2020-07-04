@@ -21,6 +21,17 @@ jobs:
       run: dotnet tool restore
     - name: Install dependencies
       run: dotnet restore
+    - name: Build
+      env:
+        SAFEDEPLOYTENANTID: ${{ secrets.SAFEDEPLOYTENANTID }}
+      run: echo "$SAFEDEPLOYTENANTID"
+    #   dotnet fake build --target appservice
+    # -e subscriptionId=<subId>
+    # -e clientId=<clientId>
+    # -e tenantId=<tenantId>
+    # -e environment=<environment> (optional)
+    # -e location=<location>       (optional)
+    # -e pricingTier=<pricingTier> (optional)
     #- name: Build
     #  run: dotnet build --configuration Release --no-restore
     #- name: Test
