@@ -23,14 +23,17 @@ jobs:
       run: dotnet restore
     - name: Build
       env:
-        SAFEDEPLOYTENANTID: ${{ secrets.SAFEDEPLOYTENANTID }}
-      run: echo "$SAFEDEPLOYTENANTID"
-    #   dotnet fake build --target appservice
-    # -e subscriptionId=<subId>
-    # -e clientId=<clientId>
-    # -e tenantId=<tenantId>
-    # -e environment=<environment> (optional)
-    # -e location=<location>       (optional)
+        clientId: ${{ secrets.SAFEDEPLOYAPPID }}
+        subscriptionId: ${{ secrets.SAFEDEPLOYSUBSCRIPTIONID }}
+        clientSecret: ${{ secrets.SAFEDEPLOYSECRET }}
+        tenantId: ${{ secrets.SAFEDEPLOYTENANTID }}
+      run: |
+        dotnet fake build --target appservice
+        -e subscriptionId= "$subscriptionId"
+        -e clientId= "$clientId"
+        -e clientSecret= "$clientSecret"
+        -e tenantId= "$tenantId"
+        -e location= australiaeast
     # -e pricingTier=<pricingTier> (optional)
     #- name: Build
     #  run: dotnet build --configuration Release --no-restore

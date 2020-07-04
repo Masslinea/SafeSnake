@@ -147,8 +147,20 @@ Target.create "ArmTemplate" (fun _ ->
         |> authenticateDevice Trace.trace { ClientId = clientId; TenantId = tenantId }
         |> Async.RunSynchronously
 
+    let authCtxNotDevice =
+        // You can safely replace these with your own subscription and client IDs hard-coded into this script.
+        let subscriptionId = try Environment.environVar "subscriptionId" |> Guid.Parse with _ -> failwith "Invalid Subscription ID. This should be your Azure Subscription ID."
+        let clientId = try Environment.environVar "clientId" |> Guid.Parse with _ -> failwith "Invalid Client ID. This should be the Client ID of an application registered in Azure with permission to create resources in your subscription."
+        let tenantId =
+            try Environment.environVarOrDefault "tenantId" "" |> Guid.Parse
+            with _ -> failwith "Invalid TenantId ID. This should be the Tenant ID of an application registered in Azure with permission to create resources in your subscription."
+        let clientSecret = Environment.environVarOrDefault "clientSecret" "clientSecret"
+        Trace.tracefn "Deploying template '%s' to resource group '%s' in subscription '%O'..." armTemplate resourceGroupName subscriptionId
+        subscriptionId
+        |> authenticate { ClientId = clientId; TenantId = tenantId ; ClientSecret = clientSecret}
+
     let deployment =
-        let location = Environment.environVarOrDefault "location" Region.EuropeWest.Name
+        let location = Environment.environVarOrDefault "location" Region.AustraliaEast.Name
         let pricingTier = Environment.environVarOrDefault "pricingTier" "F1"
         { DeploymentName = "SAFE-template-deploy"
           ResourceGroup = New(resourceGroupName, Region.Create location)
@@ -161,7 +173,7 @@ Target.create "ArmTemplate" (fun _ ->
           DeploymentMode = Incremental }
 
     deployment
-    |> deployWithProgress authCtx
+    |> deployWithProgress authCtxNotDevice
     |> Seq.iter(function
         | DeploymentInProgress (state, operations) -> Trace.tracefn "State is %s, completed %d operations." state operations
         | DeploymentError (statusCode, message) -> Trace.traceError <| sprintf "DEPLOYMENT ERROR: %s - '%s'" statusCode message
