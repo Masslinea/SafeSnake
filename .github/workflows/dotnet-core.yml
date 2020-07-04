@@ -19,6 +19,6 @@ jobs:
     - name: Install tooling
       run: dotnet tool restore
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet paket restore
     - name: Build
       run: dotnet fake build --target build
