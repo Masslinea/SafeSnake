@@ -2,7 +2,7 @@ name: .NET Core
 
 on:
   release:
-    types: [published]
+    types: [ published ]
     branches: [ release ]
 
 jobs:
