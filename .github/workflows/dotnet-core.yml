@@ -29,13 +29,6 @@ jobs:
         tenantId: ${{ secrets.SAFEDEPLOYTENANTID }}
       run: |
         dotnet fake build --target appservice
-        -e subscriptionId= "$subscriptionId"
-        -e clientId= "$clientId"
-        -e clientSecret= "$clientSecret"
-        -e tenantId= "$tenantId"
-        -e location= australiaeast
-    # -e pricingTier=<pricingTier> (optional)
-    #- name: Build
-    #  run: dotnet build --configuration Release --no-restore
-    #- name: Test
-    #  run: dotnet test --no-restore --verbosity normal
+        -e location= "australiaeast"
+        -e environment = "dev"
+
