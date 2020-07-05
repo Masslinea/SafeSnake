@@ -130,7 +130,7 @@ type ArmOutput =
 let mutable deploymentOutputs : ArmOutput option = None
 
 Target.create "ArmTemplate" (fun _ ->
-    let rgEnvironment = Environment.environVarOrDefault "rgEnvironment" (Guid.NewGuid().ToString().ToLower().Split '-' |> Array.head)
+    let rgEnvironment = Environment.environVarOrDefault "rgEnvironment" "darn"  //(Guid.NewGuid().ToString().ToLower().Split '-' |> Array.head)
     let armTemplate = @"arm-template.json"
     let resourceGroupName = "safe-" + rgEnvironment
 
