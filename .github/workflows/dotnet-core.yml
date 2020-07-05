@@ -27,7 +27,6 @@ jobs:
         subscriptionId: ${{ secrets.SAFEDEPLOYSUBSCRIPTIONID }}
         clientSecret: ${{ secrets.SAFEDEPLOYSECRET }}
         tenantId: ${{ secrets.SAFEDEPLOYTENANTID }}
-      run: >
-        dotnet fake build --target appservice
-        -e location= "australiaeast"
-        -e rgEnvironment = "dev"
+        location: "australiaeast"
+        rgEnvironment: "dev"
+      run: dotnet fake build --target appservice
