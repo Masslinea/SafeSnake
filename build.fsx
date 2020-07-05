@@ -155,7 +155,7 @@ Target.create "ArmTemplate" (fun _ ->
           ArmTemplate = IO.File.ReadAllText armTemplate
           Parameters =
               Simple
-                  [ "environment", ArmString environment
+                  [ "environment", ArmString rgEnvironment
                     "location", ArmString location
                     "pricingTier", ArmString pricingTier ]
           DeploymentMode = Incremental }
