@@ -130,9 +130,9 @@ type ArmOutput =
 let mutable deploymentOutputs : ArmOutput option = None
 
 Target.create "ArmTemplate" (fun _ ->
-    let environment = Environment.environVarOrDefault "environment" (Guid.NewGuid().ToString().ToLower().Split '-' |> Array.head)
+    let rgEnvironment = Environment.environVarOrDefault "rgEnvironment" (Guid.NewGuid().ToString().ToLower().Split '-' |> Array.head)
     let armTemplate = @"arm-template.json"
-    let resourceGroupName = "safe-" + environment
+    let resourceGroupName = "safe-" + rgEnvironment
 
     // let authCtx =
     //     // You can safely replace these with your own subscription and client IDs hard-coded into this script.

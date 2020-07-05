@@ -30,5 +30,5 @@ jobs:
       run: >
         dotnet fake build --target appservice
         -e location= "australiaeast"
-        -e environment = "dev"
+        -e rgEnvironment = "dev"
 
