@@ -1,4 +1,4 @@
-FROM masslinea/gpbase:latest
+FROM masslinea/gpbasenet31:latest
 
 USER gitpod
 
