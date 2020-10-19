@@ -1,4 +1,5 @@
 tasks:
   - init: yarn install
+    command: dotnet tool restore
 image:
   file: .gitpod.Dockerfile
