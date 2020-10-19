@@ -1,5 +1,14 @@
 tasks:
-  - init: yarn install
-    command: dotnet tool restore
+  - init: |
+        touch /tmp/.init-lock
+        yarn install
+        dotnet tool restore
+        rm /tmp/.init-lock
+  - prebuild: sleep 1 && while [ -f /tmp/.init-lock ]; do sleep 1; done
+    command: dotnet fake build
 image:
   file: .gitpod.Dockerfile
+
+github:
+  prebuilds:
+    master: true
